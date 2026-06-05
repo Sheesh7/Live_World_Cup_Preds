@@ -1,0 +1,105 @@
+Match_ID,Stage,Home Team,Away Team,ESPN_ID,Pre_Home_Win_Pct,Pre_Draw_Pct,Pre_Away_Win_Pct
+1,Group A,Mexico,South Africa,760415,41.77,30.11,28.12
+2,Group A,South Korea,Czech Republic,760414,36.41,30.61,32.98
+3,Group B,Canada,Bosnia and Herzegovina,760416,40.95,26.12,32.93
+4,Group D,United States,Paraguay,760417,39.99,28.95,31.06
+5,Group B,Qatar,Switzerland,760420,28.2,29.18,42.62
+6,Group C,Brazil,Morocco,760419,44.22,27.57,28.21
+7,Group C,Haiti,Scotland,760418,26.5,30.55,42.95
+8,Group D,Australia,Turkey,760421,31.44,29.18,39.38
+9,Group E,Germany,Curaçao,760422,44.07,27.88,28.05
+10,Group F,Netherlands,Japan,760425,44.73,24.33,30.94
+11,Group E,Ivory Coast,Ecuador,760423,28.02,31.67,40.31
+12,Group F,Sweden,Tunisia,760424,37.04,28.18,34.78
+13,Group H,Spain,Cape Verde,760428,47.04,29.09,23.87
+14,Group G,Belgium,Egypt,760426,42.99,29.07,27.94
+15,Group H,Saudi Arabia,Uruguay,760429,28.29,27.59,44.12
+16,Group G,Iran,New Zealand,760427,40.77,26.75,32.48
+17,Group I,France,Senegal,760432,40.11,25.79,34.1
+18,Group I,Iraq,Norway,760430,30.56,29.25,40.19
+19,Group J,Argentina,Algeria,760433,43.86,24.15,31.99
+20,Group J,Austria,Jordan,760431,39.43,31.37,29.2
+21,Group K,Portugal,DR Congo,760435,44.59,26.62,28.79
+22,Group L,England,Croatia,760437,21.13,38.58,40.3
+23,Group L,Ghana,Panama,760434,33.18,30.32,36.5
+24,Group K,Uzbekistan,Colombia,760436,28.32,28.79,42.88
+25,Group A,Czech Republic,South Africa,760438,35.19,30.74,34.07
+26,Group B,Switzerland,Bosnia and Herzegovina,760439,41.35,30.2,28.45
+27,Group B,Canada,Qatar,760440,41.5,27.86,30.64
+28,Group A,Mexico,South Korea,760441,39.92,30.32,29.76
+29,Group D,United States,Australia,760442,42.14,28.47,29.39
+30,Group C,Scotland,Morocco,760445,33.08,29.13,37.79
+31,Group C,Brazil,Haiti,760444,46.16,23.97,29.87
+32,Group D,Turkey,Paraguay,760443,35.69,31.02,33.29
+33,Group F,Netherlands,Sweden,760447,43.13,29.19,27.68
+34,Group E,Germany,Ivory Coast,760448,42.68,29.5,27.82
+35,Group E,Ecuador,Curaçao,760446,44.24,27.08,28.68
+36,Group F,Tunisia,Japan,760449,32.32,30.39,37.29
+37,Group H,Spain,Saudi Arabia,760453,45.79,29.59,24.62
+38,Group G,Belgium,Iran,760451,44.07,29.48,26.45
+39,Group H,Uruguay,Cape Verde,760450,44.28,27.67,28.05
+40,Group G,New Zealand,Egypt,760452,30.84,26.84,42.32
+41,Group J,Argentina,Austria,760456,42.77,23.99,33.24
+42,Group I,France,Iraq,760457,42.16,30.55,27.29
+43,Group I,Norway,Senegal,760454,40.04,21.5,38.46
+44,Group J,Jordan,Algeria,760455,32.57,30.67,36.76
+45,Group K,Portugal,Uzbekistan,760461,44.56,26.58,28.87
+46,Group L,England,Ghana,760458,29.89,44.08,26.04
+47,Group L,Panama,Croatia,760460,27.96,29.91,42.13
+48,Group K,Colombia,DR Congo,760459,42.74,28.73,28.53
+49,Group B,Bosnia and Herzegovina,Qatar,760462,37.4,26.2,36.4
+50,Group B,Switzerland,Canada,760463,39.79,27.79,32.42
+51,Group C,Morocco,Haiti,760464,44.33,20.39,35.28
+52,Group C,Scotland,Brazil,760465,28.63,28.09,43.28
+53,Group A,Czech Republic,Mexico,760467,28.97,29.57,41.46
+54,Group A,South Africa,South Korea,760466,32.03,31.14,36.82
+55,Group E,Curaçao,Ivory Coast,760473,32.81,27.0,40.19
+56,Group E,Ecuador,Germany,760468,30.12,33.84,36.04
+57,Group F,Japan,Sweden,760471,33.55,28.85,37.6
+58,Group F,Tunisia,Netherlands,760472,28.72,27.18,44.1
+59,Group D,Paraguay,Australia,760469,36.72,32.71,30.56
+60,Group D,Turkey,United States,760470,32.4,28.27,39.33
+61,Group I,Norway,France,760475,31.0,32.78,36.21
+62,Group I,Senegal,Iraq,760474,41.71,30.33,27.96
+63,Group H,Cape Verde,Saudi Arabia,760478,35.11,27.02,37.87
+64,Group H,Uruguay,Spain,760479,38.33,20.6,41.07
+65,Group G,Egypt,Iran,760476,36.88,30.43,32.69
+66,Group G,New Zealand,Belgium,760477,29.08,25.21,45.7
+67,Group L,Croatia,Ghana,760480,42.29,30.27,27.44
+68,Group L,Panama,England,760485,32.51,45.29,22.21
+69,Group K,Colombia,Portugal,760481,29.83,30.39,39.78
+70,Group K,DR Congo,Uzbekistan,760482,36.08,30.22,33.7
+71,Group J,Algeria,Austria,760484,34.7,25.54,39.75
+72,Group J,Jordan,Argentina,760483,29.36,26.19,44.45
+73,Round of 32,Group A 2nd Place,Group B 2nd Place,760486,36.94,26.11,36.94
+74,Round of 32,Group C Winner,Group F 2nd Place,760487,36.94,26.11,36.94
+75,Round of 32,Group E Winner,Third Place Group A/B/C/D/F,760489,36.94,26.11,36.94
+76,Round of 32,Group F Winner,Group C 2nd Place,760488,36.94,26.11,36.94
+77,Round of 32,Group E 2nd Place,Group I 2nd Place,760490,36.94,26.11,36.94
+78,Round of 32,Group I Winner,Third Place Group C/D/F/G/H,760492,36.94,26.11,36.94
+79,Round of 32,Group A Winner,Third Place Group C/E/F/H/I,760491,36.94,26.11,36.94
+80,Round of 32,Group L Winner,Third Place Group E/H/I/J/K,760495,36.94,26.11,36.94
+81,Round of 32,Group G Winner,Third Place Group C/E/F/H/I,760493,36.94,26.11,36.94
+82,Round of 32,Group D Winner,Third Place Group b/E/F/I/J,760494,36.94,26.11,36.94
+83,Round of 32,Group H Winner,Group J 2nd Place,760497,36.94,26.11,36.94
+84,Round of 32,Group K 2nd Place,Group L 2nd Place,760496,36.94,26.11,36.94
+85,Round of 32,Group B Winner,Third Place Group E/F/G/I/J,760498,36.94,26.11,36.94
+86,Round of 32,Group D 2nd Place,Group G 2nd Place,760499,36.94,26.11,36.94
+87,Round of 32,Group J Winner,Group H 2nd Place,760500,36.94,26.11,36.94
+88,Round of 32,Group K Winner,Third Place Group D/E/I/J/L,760501,36.94,26.11,36.94
+89,Round of 16,Round of 32 1 Winner,Round of 32 3 Winner,760502,36.94,26.11,36.94
+90,Round of 16,Round of 32 2 Winner,Round of 32 5 Winner,760503,36.94,26.11,36.94
+91,Round of 16,Round of 32 4 Winner,Round of 32 6 Winner,760504,36.94,26.11,36.94
+92,Round of 16,Round of 32 7 Winner,Round of 32 8 Winner,760505,36.94,26.11,36.94
+93,Round of 16,Round of 32 11 Winner,Round of 32 12 Winner,760506,36.94,26.11,36.94
+94,Round of 16,Round of 32 9 Winner,Round of 32 10 Winner,760507,36.94,26.11,36.94
+95,Round of 16,Round of 32 14 Winner,Round of 32 16 Winner,760509,36.94,26.11,36.94
+96,Round of 16,Round of 32 13 Winner,Round of 32 15 Winner,760508,36.94,26.11,36.94
+97,Quarter Finals,Round of 16 1 Winner,Round of 16 2 Winner,760510,36.94,26.11,36.94
+98,Quarter Finals,Round of 16 5 Winner,Round of 16 6 Winner,760511,36.94,26.11,36.94
+99,Quarter Finals,Round of 16 3 Winner,Round of 16 4 Winner,760512,36.94,26.11,36.94
+100,Quarter Finals,Round of 16 7 Winner,Round of 16 8 Winner,760513,36.94,26.11,36.94
+101,Semi Finals,Quarter Finals 1 Winner,Quarter Finals 2 Winner,760514,36.94,26.11,36.94
+102,Semi Finals,Quarter Finals 3 Winner,Quarter Finals 4 Winner,760515,36.94,26.11,36.94
+103,3rd Place Game,Semi Finals 1 Loser,Semi Finals 2 Loser,760516,36.94,26.11,36.94
+104,Finals,Semi Finals 1 Winner,Semi Finals 2 Winner,760517,36.94,26.11,36.94

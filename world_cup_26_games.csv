@@ -1,0 +1,105 @@
+match_id,stage,home_team,away_team,neutral_flag,ESPN_ID
+1,Group A,Mexico,South Africa,False,760415
+2,Group A,South Korea,Czech Republic,True,760414
+3,Group B,Canada,Bosnia and Herzegovina,False,760416
+4,Group D,United States,Paraguay,True,760417
+5,Group B,Qatar,Switzerland,True,760420
+6,Group C,Brazil,Morocco,True,760419
+7,Group C,Haiti,Scotland,False,760418
+8,Group D,Australia,Turkey,True,760421
+9,Group E,Germany,Curaçao,True,760422
+10,Group F,Netherlands,Japan,True,760425
+11,Group E,Ivory Coast,Ecuador,True,760423
+12,Group F,Sweden,Tunisia,True,760424
+13,Group H,Spain,Cape Verde,True,760428
+14,Group G,Belgium,Egypt,True,760426
+15,Group H,Saudi Arabia,Uruguay,True,760429
+16,Group G,Iran,New Zealand,True,760427
+17,Group I,France,Senegal,True,760432
+18,Group I,Iraq,Norway,True,760430
+19,Group J,Argentina,Algeria,True,760433
+20,Group J,Austria,Jordan,True,760431
+21,Group K,Portugal,DR Congo,True,760435
+22,Group L,England,Croatia,True,760437
+23,Group L,Ghana,Panama,True,760434
+24,Group K,Uzbekistan,Colombia,True,760436
+25,Group A,Czech Republic,South Africa,True,760438
+26,Group B,Switzerland,Bosnia and Herzegovina,True,760439
+27,Group B,Canada,Qatar,False,760440
+28,Group A,Mexico,South Korea,False,760441
+29,Group D,United States,Australia,False,760442
+30,Group C,Scotland,Morocco,True,760445
+31,Group C,Brazil,Haiti,True,760444
+32,Group D,Turkey,Paraguay,True,760443
+33,Group F,Netherlands,Sweden,True,760447
+34,Group E,Germany,Ivory Coast,True,760448
+35,Group E,Ecuador,Curaçao,True,760446
+36,Group F,Tunisia,Japan,True,760449
+37,Group H,Spain,Saudi Arabia,True,760453
+38,Group G,Belgium,Iran,True,760451
+39,Group H,Uruguay,Cape Verde,True,760450
+40,Group G,New Zealand,Egypt,True,760452
+41,Group J,Argentina,Austria,True,760456
+42,Group I,France,Iraq,True,760457
+43,Group I,Norway,Senegal,True,760454
+44,Group J,Jordan,Algeria,True,760455
+45,Group K,Portugal,Uzbekistan,True,760461
+46,Group L,England,Ghana,True,760458
+47,Group L,Panama,Croatia,True,760460
+48,Group K,Colombia,DR Congo,True,760459
+49,Group B,Bosnia and Herzegovina,Qatar,True,760462
+50,Group B,Switzerland,Canada,False,760463
+51,Group C,Morocco,Haiti,True,760464
+52,Group C,Scotland,Brazil,True,760465
+53,Group A,Czech Republic,Mexico,False,760467
+54,Group A,South Africa,South Korea,True,760466
+55,Group E,Curaçao,Ivory Coast,True,760473
+56,Group E,Ecuador,Germany,True,760468
+57,Group F,Japan,Sweden,True,760471
+58,Group F,Tunisia,Netherlands,True,760472
+59,Group D,Paraguay,Australia,True,760469
+60,Group D,Turkey,United States,False,760470
+61,Group I,Norway,France,True,760475
+62,Group I,Senegal,Iraq,True,760474
+63,Group H,Cape Verde,Saudi Arabia,True,760478
+64,Group H,Uruguay,Spain,True,760479
+65,Group G,Egypt,Iran,True,760476
+66,Group G,New Zealand,Belgium,True,760477
+67,Group L,Croatia,Ghana,True,760480
+68,Group L,Panama,England,True,760485
+69,Group K,Colombia,Portugal,True,760481
+70,Group K,DR Congo,Uzbekistan,True,760482
+71,Group J,Algeria,Austria,True,760484
+72,Group J,Jordan,Argentina,True,760483
+73,Round of 32,Group A 2nd Place,Group B 2nd Place,True, 760486
+74,Round of 32,Group C Winner,Group F 2nd Place,True,760487
+75,Round of 32,Group E Winner,Third Place Group A/B/C/D/F,True,760489
+76,Round of 32,Group F Winner,Group C 2nd Place,True,760488
+77,Round of 32,Group E 2nd Place,Group I 2nd Place,True, 760490
+78,Round of 32,Group I Winner,Third Place Group C/D/F/G/H,True,760492
+79,Round of 32,Group A Winner,Third Place Group C/E/F/H/I,True,760491
+80,Round of 32,Group L Winner,Third Place Group E/H/I/J/K,True,760495
+81,Round of 32,Group G Winner,Third Place Group C/E/F/H/I,True,760493
+82,Round of 32,Group D Winner,Third Place Group b/E/F/I/J,True,760494
+83,Round of 32,Group H Winner,Group J 2nd Place,True,760497
+84,Round of 32,Group K 2nd Place,Group L 2nd Place,True,760496
+85,Round of 32,Group B Winner,Third Place Group E/F/G/I/J,True,760498
+86,Round of 32,Group D 2nd Place,Group G 2nd Place,True,760499
+87,Round of 32,Group J Winner,Group H 2nd Place,True,760500
+88,Round of 32,Group K Winner,Third Place Group D/E/I/J/L,True,760501
+89,Round of 16,Round of 32 1 Winner,Round of 32 3 Winner,True,760502
+90,Round of 16,Round of 32 2 Winner,Round of 32 5 Winner,True,760503
+91,Round of 16,Round of 32 4 Winner,Round of 32 6 Winner,True,760504
+92,Round of 16,Round of 32 7 Winner,Round of 32 8 Winner,True,760505
+93,Round of 16,Round of 32 11 Winner,Round of 32 12 Winner,True,760506
+94,Round of 16,Round of 32 9 Winner,Round of 32 10 Winner,True,760507
+95,Round of 16,Round of 32 14 Winner,Round of 32 16 Winner,True,760509
+96,Round of 16,Round of 32 13 Winner,Round of 32 15 Winner,True,760508
+97,Quarter Finals,Round of 16 1 Winner,Round of 16 2 Winner,True,760510
+98,Quarter Finals,Round of 16 5 Winner,Round of 16 6 Winner,True,760511
+99,Quarter Finals,Round of 16 3 Winner,Round of 16 4 Winner,True,760512
+100,Quarter Finals,Round of 16 7 Winner,Round of 16 8 Winner,True,760513
+101,Semi Finals,Quarter Finals 1 Winner,Quarter Finals 2 Winner,True,760514
+102,Semi Finals,Quarter Finals 3 Winner,Quarter Finals 4 Winner,True,760515
+103,3rd Place Game,Semi Finals 1 Loser,Semi Finals 2 Loser,True,760516
+104,Finals,Semi Finals 1 Winner,Semi Finals 2 Winner,True,760517
