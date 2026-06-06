@@ -10,6 +10,7 @@ The system couples a **Deep Learning classification pipeline** (establishing sta
 
 The platform decouples historical pattern matching from volatile live streaming data using a three-tier architecture:
 
+```text
 ┌─────────────────────────────┐
 │ 🧠 Deep Learning Pipeline    ──> Generates Unbiased Match Priors
 │    (predictive_model.ipynb) │     Stored in world_cup_26_baselines.csv
@@ -26,6 +27,7 @@ The platform decouples historical pattern matching from volatile live streaming 
 │ 📊 Streamlit Frontend Web UI  ──> Orchestrates 10s Polling Loop;
 │         (app.py)            │     Manages State & Renders Time-Series
 └─────────────────────────────┘
+```
 
 ### Design Decision: Hybrid Machine Learning + Heuristic Architecture
 * **The Choice:** A static Neural Network generates pre-match priors, while a deteministic mathematical engine handles live in-game  adjustments.
