@@ -64,7 +64,7 @@ The classification task maps continuous and categorical features to a categorica
     * **Layer 2:** `Dense(64, activation='relu')` paired with `Dropout(0.2)` to prevent overfitting on historical outliers.
     * **Layer 3:** `Dense(32, activation='relu')` to project data into a dense latent space.
     * **Output Layer:** `Dense(3, activation='softmax')`, yielding a valid, normalized probability distribution: $$\sum_{i=0}^{2} P(\text{Class}_i) = 1.0$$
-* **Compilation Details: ** Optimized via the **Adam** algorithm ($\text{learning\_rate} = 0.001$) minimizing a **Sparse Categorical Cross-Entropy** objective function, which eliminates the memory overhead of one-hot encoding target labels.
+* **Compilation Details: ** Optimized via the **Adam** algorithm (`learning_rate = 0.001`) minimizing a **Sparse Categorical Cross-Entropy** objective function, which eliminates the memory overhead of one-hot encoding target labels.
 
 ### 3. Bias-Free Symmetric Inference Ensembling
 * **Feature Implementation:** Because tournament matches take place at neutral venues, assigning a team as "Home" or "Away" introduces an artificial home-field advantage bias within the neural network.
