@@ -93,7 +93,7 @@ Live metrics modify the baseline priors ($p_h, p_d, p_a$) dynamically through ex
 * **Momentum Modification Coefficient:** Quantifies field pressure by combining possession delta with an exponential attacking volume multiplier:
     $$\text{Threat Vol} = \text{Shots} + (2 \times \text{Shots on Target})$$
     $$\text{Momentum Modifier} = (\Delta\text{Possession} \times 0.10) + (\Delta\text{Threat Vol} \times 0.015)$$
-* **Time Decay and State Gravity:** Using the proportion of time remaining ($\tau = \frac{90 - t}{90}$), probabilities are bound to live score states $$(gd = \text{Score}_{\text{Home}} - \text{Score}_{\text{Away}})$$:
+* **Time Decay and State Gravity:** Using the proportion of time remaining ($\tau = \frac{90 - t}{90}$), probabilities are bound to live score states $$gd = \text{Score}_{\text{Home}} - \text{Score}_{\text{Away}}$$:
     * **Leading State ($gd \neq 0$):** Activates a non-linear decay function. As $\tau \to 0$, the trailing team’s chances vanish and the leading team's holding capability approaches 1.0:
     $$\text{Holding Power} = 1.0 - \tau^{(1.2 \cdot |gd|)}$$
     $$\text{Live } P_{\text{Leader}} = P_{\text{Leader}} + (1.0 - P_{\text{Leader}}) \times \text{Holding Power}$$
