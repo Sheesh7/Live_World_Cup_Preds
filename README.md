@@ -1,6 +1,6 @@
 # ⚽ Real-Time Bayesian-Adjusted Win-Probability Tracker
 
-An end-to-end predictive analytics framework designed to model, estimate, and visualize match outcome probabilities ($P(\text{Home})$, $P(\text{Draw})$, $P(\text{Away})$) dynamically during international football fixtures.
+An end-to-end predictive analytics framework designed to model, estimate, and visualize match outcome probabilities ($P(\text{Home})$, $P(\text{Draw})$, $P(\text{Away})$ dynamically during international football fixtures.
 
 The system couples a **Deep Learning classification pipeline** (establishing static pre-match Priors) with a **stateful real-time data engine** that continuosly updates predictions using in-game telemetry, time decay, and game-state gravity.
 
