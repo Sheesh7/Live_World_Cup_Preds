@@ -48,8 +48,9 @@ Instead of feeding raw, high-variance metrics directly to the model, the data pi
 
 * **Exponential Decay Ranking Transformation ('ranking_delta):** Raw FIFA ranking are ordinal and do not represent the non-linear gap in skill between elite squads and lower-ranked teams. To correct this, rankings are mapped to a continuous latent "Power Score" space using an exponential decay function before calculating the delta:
     $$\text{Power} = e^{-\frac{\text{Ranking}}{20.0}}$$
-  
-    $$\text{Ranking Delta} = \text{Power}_{\text{Home}} - \text{Power}_{\text{Away}}$$
+    $$
+  \text{Ranking Delta} = \text{Power}_{\text{Home}} - \text{Power}_{\text{Away}}
+  $$
 
 * **Log-Transform Market Value Standardizer ('log_market_value_delta):** Roster values span multiple orders of magnitude (from millions to billions of Euros). A regex parser standardizes currency text representations into uniform floats, and a log transformation ($\log_e(1 + x)$) is applied to compress the extreme right skew of finacial distributions, allowing the neural network to stably process financial disparities.
 
