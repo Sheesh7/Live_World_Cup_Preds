@@ -1,6 +1,6 @@
 # ⚽ Real-Time Bayesian-Adjusted Win-Probability Tracker
 
-An end-to-end predictive analytics framework designed to model, estimate, and visualize match outcome probabilities ($P(\text{Home})$, $P(\text{Draw})$, $P(\text{Away})$ dynamically during international football fixtures.
+An end-to-end predictive analytics framework designed to model, estimate, and visualize match outcome probabilities $P(\text{Home})$, $P(\text{Draw})$, $P(\text{Away})$ dynamically during international football fixtures.
 
 The system couples a **Deep Learning classification pipeline** (establishing static pre-match Priors) with a **stateful real-time data engine** that continuosly updates predictions using in-game telemetry, time decay, and game-state gravity.
 
@@ -8,26 +8,10 @@ The system couples a **Deep Learning classification pipeline** (establishing sta
 
 ## 🏗️ Architectural Topology & Workflow
 
-The platform decouples historical pattern matching from volatile live streaming data using a three-tier architecture:
-
-```text
-┌─────────────────────────────┐
-│ 🧠 Deep Learning Pipeline    ──> Generates Unbiased Match Priors
-│    (predictive_model.ipynb) │     Stored in world_cup_26_baselines.csv
-└─────────────────────────────┘
-│
-▼
-┌─────────────────────────────┐
-│ ⚡ Live Processing Engine    ──> Pulls Live Boxscores via ESPN API;
-│        (engine.py)          │     Executes Bayesian Modifier Mathematics
-└─────────────────────────────┘
-│
-▼
-┌─────────────────────────────┐
-│ 📊 Streamlit Frontend Web UI  ──> Orchestrates 10s Polling Loop;
-│         (app.py)            │     Manages State & Renders Time-Series
-└─────────────────────────────┘
-```
+The platform utilizes a decoupled client-server architecture, separating the predicitve modeling layer from the real-time simulation layer.
+* **Predictive Baseline Engine:** A Python/TensorFlow pipeline that processes historical match results and squad market values to generate symmetric, unbiased match baselines.
+* **Backend (app.py & engine.py):** A FastAPI server that orchestrates the pre-calculated baselines and manages the Bayesian probability engine for live data.
+* **Frontend (index.html):** A high peformance, responsive UI built with Vanilla JavaScript and Chart.js, utilizing an auto-polling loop to render real-time telemetry
 
 ### Design Decision: Hybrid Machine Learning + Heuristic Architecture
 * **The Choice:** A static Neural Network generates pre-match priors, while a deteministic mathematical engine handles live in-game  adjustments.
@@ -81,9 +65,11 @@ The classification task maps continuous and categorical features to a categorica
 ## ⚡ Real-Time Processing Engine (`engine.py`)
 The engine functions as stateful middleware, pulling boxscores via an API and executing a deterministic **Bayesian Update Process** that treats the neural network outputs as priors.
 
-### 1. Robust API Orchestration & Schema Normalization
-* **Fallback API Routing:** To maximize uptime across diverse match types, the engine queries hidden ESPN summary endpoints. It targets the primary tournament configuration space (`fifa.world`), and instantly falls back to intenational friendlies (`intl.friendly`) if the schema returns empty configurations.
-* **Clock String Regularization:** The tracker normalizes arbitrary clock strings by scrubbing alphanumeric stoppage time extensions (e.g., converting `45+2'` to `45`) and forcing absolute milestone flags (`Halftime` $\to 45$, `Full Time/Final` $\to 90$).
+### 1. Frontend & API Integration
+The frontend is built for performance, moving away from monolithic server-side rendering to a client-side reactive model.
+* **RESTful API Interface:** The FastAPI backend servers match fixtures and live probabilities over JSON.
+* **Client-Side State Management:** JavaScript manages history arrays for charts, allowing high-frequency probability timeline visulaization.
+* **Non-Blocking Polling:** A 10-second `setInterval` loop ensures the UI stays synchronized with live ESPN boxscore updates without blocking the browser thread.
 
 ### 2. Bayesian Live Probability Modifiers
 Live metrics modify the baseline priors ($p_h, p_d, p_a$) dynamically through explicit mathematical penalties and multipliers:
@@ -105,24 +91,17 @@ Live metrics modify the baseline priors ($p_h, p_d, p_a$) dynamically through ex
 
 ---
 
-## 📊 Streamlit Frontend Web UI (`app.py`)
-
-The user interface acts as an orchestration client that handles data loading, user input, state persistence, and visualization.
-
-### Key Implementation Features
-* **Stateful Cache Isolation (`@st.cache_data`):** Caches local CSV asset loads (`world_cup_26_games.csv`, `world_cup_26_baselines.csv`) with automatic trailing whitespace truncation on header schemas to prevent redundant I/O operations.
-* **Automatic Session Cache Flush:** Utilizes `st.session_state` tracking to monitor the targeted `game_id`. If a user selects a new match from the dropdown menu, the application detects the ID change and automatically flushes the historical analytics dataframe to prepare for the new data log.
-* **Non-Blocking 10-Second Polling Loop:** Houses a stateful `while True` execution block that updates metrics inside a dynamic `st.empty()` layout container. If the API returns a terminal match status (`Full Time`, `FT`, `Final`), the engine breaks the loop to preserve system resources.
-
----
-
 ## 🛠️ Setup & Installation
 
 ### 1. Prerequisites
 Install the required standard libraries and frameworks:
 ```bash
-pip install pandas numpy tensorflow scikit-learn streamlit requests matplotlib seaborn
+pip install fastapi uvicorn pandas numpy requests tensorflow scikit-learn
 ```
+### 2. Running the Application
+1. Generate baselines by running prediction notebook to generate `world_cup_26_baselines`.
+2. Start the API: `uvicorn app:app --reload`
+3. Access the Dashboard: Open `index.html` in your browser
 ## 👥 Author
 
 **Yashish Eriki** *Data Science @ Purdue University* * [GitHub](https://github.com/Sheesh7)  
