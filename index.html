@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>World Cup 2026 · Live Win Probability</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:       #0d0f14;
+    --surface:  #151820;
+    --card:     #1c2030;
+    --border:   #2a2f42;
+    --text:     #e8eaf0;
+    --muted:    #6b7280;
+    --home:     #38bdf8;
+    --draw:     #a78bfa;
+    --away:     #f97316;
+    --green:    #4ade80;
+    --yellow:   #facc15;
+    --red:      #f87171;
+    --font-mono: 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .brand-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--home);
+  }
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .live-badge.visible { opacity: 1; }
+  .live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* Match selector */
+  .selector-bar {
+    padding: 20px 28px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .selector-bar label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  select {
+    flex: 1;
+    min-width: 220px;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  select:focus { border-color: var(--home); }
+
+  .poll-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .toggle-track {
+    width: 36px; height: 20px;
+    background: var(--border);
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-track.on { background: var(--home); }
+  .toggle-thumb {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    top: 3px; left: 3px;
+    transition: transform 0.2s;
+  }
+  .toggle-track.on .toggle-thumb { transform: translateX(16px); }
+
+  /* Main layout */
+  main { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; max-width: 1100px; margin: 0 auto; }
+
+  /* Scoreboard */
+  .scoreboard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px 22px;
+  }
+  .match-meta {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .status-pill {
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    transition: background 0.3s, color 0.3s;
+  }
+  .status-pill.live {
+    background: rgba(74,222,128,0.12);
+    border-color: rgba(74,222,128,0.3);
+    color: var(--green);
+  }
+  .teams-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+  .team-block { display: flex; flex-direction: column; gap: 6px; }
+  .team-block.away { align-items: flex-end; }
+  .team-name {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .team-prob {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .team-prob.home { color: var(--home); }
+  .team-prob.away { color: var(--away); }
+  .prob-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .score-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .score-display {
+    font-family: var(--font-mono);
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .score-sep { color: var(--muted); margin: 0 6px; }
+  .draw-prob {
+    font-size: 12px;
+    color: var(--draw);
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  /* Probability bar */
+  .prob-bar-wrap { margin-top: 22px; }
+  .prob-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .prob-bar-track {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--card);
+    display: flex;
+    overflow: hidden;
+  }
+  .prob-seg {
+    height: 100%;
+    transition: width 0.6s ease;
+  }
+  .prob-seg.home { background: var(--home); }
+  .prob-seg.draw { background: var(--draw); }
+  .prob-seg.away { background: var(--away); }
+
+  /* Priors row */
+  .priors-row {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .prior-item span { color: var(--text); font-family: var(--font-mono); }
+
+  /* Grid row for chart + stats */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+  }
+  @media (max-width: 780px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .card-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  /* Chart */
+  .chart-wrap { position: relative; height: 240px; }
+
+  /* Stats panel */
+  .stat-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .stat-item {}
+  .stat-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .stat-values {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .stat-values .h { color: var(--home); }
+  .stat-values .a { color: var(--away); }
+  .stat-bar-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--card);
+    display: flex;
+    overflow: hidden;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+  .stat-bar-fill.home { background: var(--home); }
+  .stat-bar-fill.away { background: var(--away); }
+
+  /* Cards row */
+  .cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .card-mini {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .card-mini-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .card-mini-vals {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  /* Error / loading */
+  .state-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--muted);
+    font-size: 14px;
+    gap: 10px;
+  }
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--home);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-dot"></div>
+    World Cup 2026 · Win Probability
+  </div>
+  <div class="live-badge" id="liveBadge">
+    <div class="live-dot"></div>
+    Live
+  </div>
+</header>
+
+<div class="selector-bar">
+  <label>Match</label>
+  <select id="matchSelect" onchange="onMatchChange()">
+    <option value="">Loading fixtures…</option>
+  </select>
+  <label class="poll-toggle" onclick="togglePolling()">
+    <div class="toggle-track on" id="toggleTrack">
+      <div class="toggle-thumb"></div>
+    </div>
+    Auto-refresh (10s)
+  </label>
+</div>
+
+<main>
+
+  <!-- Scoreboard -->
+  <div class="scoreboard" id="scoreboard">
+    <div class="state-msg" id="loadingMsg">
+      <div class="spinner"></div> Loading match data…
+    </div>
+    <div id="scoreContent" class="hidden">
+      <div class="match-meta">
+        <span id="minuteDisplay">—</span>
+        <span class="status-pill" id="statusPill">Scheduled</span>
+      </div>
+      <div class="teams-row">
+        <div class="team-block home">
+          <div class="team-name" id="homeName">—</div>
+          <div class="team-prob home" id="homeProb">—%</div>
+          <div class="prob-label">win probability</div>
+        </div>
+        <div class="score-center">
+          <div class="score-display">
+            <span id="homeScore">0</span><span class="score-sep">–</span><span id="awayScore">0</span>
+          </div>
+          <div class="draw-prob" id="drawProb">Draw —%</div>
+        </div>
+        <div class="team-block away">
+          <div class="team-name" id="awayName">—</div>
+          <div class="team-prob away" id="awayProb">—%</div>
+          <div class="prob-label">win probability</div>
+        </div>
+      </div>
+      <div class="prob-bar-wrap">
+        <div class="prob-bar-labels">
+          <span id="barHomeLabel">Home</span>
+          <span>Draw</span>
+          <span id="barAwayLabel">Away</span>
+        </div>
+        <div class="prob-bar-track">
+          <div class="prob-seg home" id="barHome" style="width:33%"></div>
+          <div class="prob-seg draw" id="barDraw" style="width:34%"></div>
+          <div class="prob-seg away" id="barAway" style="width:33%"></div>
+        </div>
+      </div>
+      <div class="priors-row">
+        <div class="prior-item">Pre-match home <span id="priorHome">—</span>%</div>
+        <div class="prior-item">Draw <span id="priorDraw">—</span>%</div>
+        <div class="prior-item">Away <span id="priorAway">—</span>%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart + Stats -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Win probability over time</div>
+      <div class="chart-wrap">
+        <canvas id="probChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Match stats</div>
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="stat-header">
+            <span id="possHomeVal">50%</span>
+            <span>Possession</span>
+            <span id="possAwayVal">50%</span>
+          </div>
+          <div class="stat-bar-track">
+            <div class="stat-bar-fill home" id="possBar" style="width:50%"></div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-header">
+            <span></span><span>Total shots</span><span></span>
+          </div>
+          <div class="stat-values">
+            <span class="h" id="shotsHome">0</span>
+            <span class="a" id="shotsAway">0</span>
+          </div>
+          <div class="stat-bar-track">
+            <div class="stat-bar-fill home" id="shotsBar" style="width:50%"></div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-header">
+            <span></span><span>Shots on target</span><span></span>
+          </div>
+          <div class="stat-values">
+            <span class="h" id="sotHome">0</span>
+            <span class="a" id="sotAway">0</span>
+          </div>
+          <div class="stat-bar-track">
+            <div class="stat-bar-fill home" id="sotBar" style="width:50%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-row" style="margin-top:18px">
+        <div class="card-mini">
+          <div class="card-mini-label">🟨 Yellow cards</div>
+          <div class="card-mini-vals">
+            <span style="color:var(--home)" id="yellowHome">0</span>
+            <span style="color:var(--muted)">vs</span>
+            <span style="color:var(--away)" id="yellowAway">0</span>
+          </div>
+        </div>
+        <div class="card-mini">
+          <div class="card-mini-label">🟥 Red cards</div>
+          <div class="card-mini-vals">
+            <span style="color:var(--home)" id="redHome">0</span>
+            <span style="color:var(--muted)">vs</span>
+            <span style="color:var(--away)" id="redAway">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const API = 'http://127.0.0.1:8000';
+let currentGameId = null;
+let pollInterval = null;
+let polling = true;
+let history = [];
+
+// Chart setup
+const ctx = document.getElementById('probChart').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [
+      { label: 'Home', data: [], borderColor: '#38bdf8', backgroundColor: 'rgba(56,189,248,0.08)', borderWidth: 2, pointRadius: 2, tension: 0.35 },
+      { label: 'Draw', data: [], borderColor: '#a78bfa', backgroundColor: 'rgba(167,139,250,0.06)', borderWidth: 1.5, pointRadius: 2, tension: 0.35 },
+      { label: 'Away', data: [], borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,0.08)', borderWidth: 2, pointRadius: 2, tension: 0.35 },
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 400 },
+    interaction: { intersect: false, mode: 'index' },
+    plugins: {
+      legend: { labels: { color: '#6b7280', font: { size: 11 }, boxWidth: 10, padding: 14 } },
+      tooltip: {
+        backgroundColor: '#1c2030',
+        borderColor: '#2a2f42',
+        borderWidth: 1,
+        titleColor: '#e8eaf0',
+        bodyColor: '#9ca3af',
+        callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` }
+      }
+    },
+    scales: {
+      x: { grid: { color: '#2a2f42' }, ticks: { color: '#6b7280', font: { size: 10 }, maxTicksLimit: 10 }, title: { display: true, text: 'Minute', color: '#4b5563', font: { size: 10 } } },
+      y: { grid: { color: '#2a2f42' }, ticks: { color: '#6b7280', font: { size: 10 }, callback: v => v + '%' }, min: 0, max: 100 }
+    }
+  }
+});
+
+// Load fixture list
+async function loadMatches() {
+  const res = await fetch(`${API}/matches`);
+  const matches = await res.json();
+  const sel = document.getElementById('matchSelect');
+  sel.innerHTML = matches.map(m =>
+    `<option value="${m.ESPN_ID}">${m.home_team} vs ${m.away_team}</option>`
+  ).join('');
+  if (matches.length) {
+    currentGameId = String(matches[0].ESPN_ID).trim(); 
+    await refreshData();
+    startPolling();
+  }
+}
+
+function onMatchChange() {
+  const sel = document.getElementById('matchSelect');
+  currentGameId = sel.value.trim(); 
+  history = [];
+  chart.data.labels = [];
+  chart.data.datasets.forEach(d => d.data = []);
+  chart.update();
+  document.getElementById('loadingMsg').classList.remove('hidden');
+  document.getElementById('scoreContent').classList.add('hidden');
+  refreshData();
+}
+
+async function refreshData() {
+  if (!currentGameId) return;
+  try {
+    const res = await fetch(`${API}/match/${currentGameId}`);
+    if (!res.ok) throw new Error('bad response');
+    const d = await res.json();
+    renderDashboard(d);
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function renderDashboard(d) {
+  document.getElementById('loadingMsg').classList.add('hidden');
+  document.getElementById('scoreContent').classList.remove('hidden');
+
+  // Status
+  const live = d.is_live_or_dead && !['Full Time','FT','Final','Ended'].includes(d.status);
+  const finished = ['Full Time','FT','Final','Ended'].includes(d.status);
+  document.getElementById('liveBadge').classList.toggle('visible', live);
+  const pill = document.getElementById('statusPill');
+  pill.textContent = d.status || 'Scheduled';
+  pill.classList.toggle('live', live);
+  document.getElementById('minuteDisplay').textContent = d.is_live_or_dead ? `${d.minute}'` : '—';
+
+  // Teams + score
+  document.getElementById('homeName').textContent = d.home_team;
+  document.getElementById('awayName').textContent = d.away_team;
+  document.getElementById('homeScore').textContent = d.home_score;
+  document.getElementById('awayScore').textContent = d.away_score;
+  document.getElementById('barHomeLabel').textContent = d.home_team;
+  document.getElementById('barAwayLabel').textContent = d.away_team;
+
+  // Probs
+  const ph = d.p_home, pd = d.p_draw, pa = d.p_away;
+  document.getElementById('homeProb').textContent = ph.toFixed(1) + '%';
+  document.getElementById('awayProb').textContent = pa.toFixed(1) + '%';
+  document.getElementById('drawProb').textContent = `Draw ${pd.toFixed(1)}%`;
+  document.getElementById('barHome').style.width = ph + '%';
+  document.getElementById('barDraw').style.width = pd + '%';
+  document.getElementById('barAway').style.width = pa + '%';
+
+  // Priors
+  if (d.priors) {
+    document.getElementById('priorHome').textContent = d.priors[0];
+    document.getElementById('priorDraw').textContent = d.priors[1];
+    document.getElementById('priorAway').textContent = d.priors[2];
+  }
+
+  // Stats
+  document.getElementById('possHomeVal').textContent = d.home_possession + '%';
+  document.getElementById('possAwayVal').textContent = d.away_possession + '%';
+  document.getElementById('possBar').style.width = d.home_possession + '%';
+
+const hShots = d.home_shots || 0;
+  const aShots = d.away_shots || 0;
+  const totalShots = hShots + aShots;
+  document.getElementById('shotsHome').textContent = hShots;
+  document.getElementById('shotsAway').textContent = aShots;
+  document.getElementById('shotsBar').style.width = totalShots > 0 ? ((hShots / totalShots) * 100) + '%' : '50%';
+
+  const hSot = d.home_sot || 0;
+  const aSot = d.away_sot || 0;
+  const totalSot = hSot + aSot;
+  document.getElementById('sotHome').textContent = hSot;
+  document.getElementById('sotAway').textContent = aSot;
+  document.getElementById('sotBar').style.width = totalSot > 0 ? ((hSot / totalSot) * 100) + '%' : '50%';
+
+  document.getElementById('yellowHome').textContent = d.home_yellows;
+  document.getElementById('yellowAway').textContent = d.away_yellows;
+  document.getElementById('redHome').textContent = d.home_reds;
+  document.getElementById('redAway').textContent = d.away_reds;
+
+  // Chart history — deduplicate by minute
+  if (d.is_live_or_dead) {
+    const min = d.minute;
+    const exists = history.find(h => h.minute === min);
+    if (!exists && min > 0) {
+      history.push({ minute: min, home: ph, draw: pd, away: pa });
+      history.sort((a,b) => a.minute - b.minute);
+      chart.data.labels = history.map(h => h.minute);
+      chart.data.datasets[0].data = history.map(h => h.home);
+      chart.data.datasets[1].data = history.map(h => h.draw);
+      chart.data.datasets[2].data = history.map(h => h.away);
+      chart.update();
+    }
+  }
+}
+
+function startPolling() {
+  clearInterval(pollInterval);
+  if (polling) pollInterval = setInterval(refreshData, 10000);
+}
+
+function togglePolling() {
+  polling = !polling;
+  document.getElementById('toggleTrack').classList.toggle('on', polling);
+  if (polling) { startPolling(); } else { clearInterval(pollInterval); }
+}
+
+loadMatches();
+</script>
+</body>
+</html>
